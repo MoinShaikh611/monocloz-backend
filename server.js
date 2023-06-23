@@ -5,10 +5,8 @@ const connectToDatabase = require('./mongoConnection');
 // Routes
 const productsRoutes = require('./routes/products');
 const authRoutes = require('./routes/authRoutes');
-const cartRoutes = require('./routes/cartRoutes');
 
 const dotenv = require('dotenv');
-const { authenticateUser } = require('./middlewares/authMiddleware');
 const app = express();
 
 dotenv.config();
@@ -28,7 +26,6 @@ app.use(express.json());
 // Routes
 app.use('/api/products', productsRoutes);
 app.use('/auth', authRoutes);
-app.use('/', authenticateUser, cartRoutes);
 
 
 // Error handler
