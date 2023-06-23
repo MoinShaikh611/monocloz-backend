@@ -5,12 +5,12 @@ const User = require('../models/user');
 const secretKey = process.env.JWT_SECRET;
 
 exports.registerUser = async (req, res) => {
-    const { username, password } = req.body;
+    const { username, password, mobile } = req.body;
 
     try {
         const hashedPassword = await bcrypt.hash(password, 10);
 
-        const user = new User({ username, password: hashedPassword });
+        const user = new User({ username, password: hashedPassword, mobile });
         await user.save();
 
         res.status(201).json({ message: 'User registered successfully' });
@@ -20,10 +20,10 @@ exports.registerUser = async (req, res) => {
 };
 
 exports.loginUser = async (req, res) => {
-    const { username, password } = req.body;
+    const { mobile, password } = req.body;
 
     try {
-        const user = await User.findOne({ username });
+        const user = await User.findOne({ mobile });
 
         if (!user) {
             return res.status(401).json({ error: 'Authentication failed' });
