@@ -1,8 +1,12 @@
 const express = require('express');
 const cors = require('cors');
 const connectToDatabase = require('./mongoConnection');
+
+// Routes
 const productsRoutes = require('./routes/products');
 const authRoutes = require('./routes/authRoutes');
+const cartRoutes = require('./routes/cartRoutes');
+
 const dotenv = require('dotenv');
 const { authenticateUser } = require('./middlewares/authMiddleware');
 const app = express();
@@ -24,11 +28,7 @@ app.use(express.json());
 // Routes
 app.use('/api/products', productsRoutes);
 app.use('/auth', authRoutes);
-
-// Protected route
-app.get('/dashboard', authenticateUser, (req, res) => {
-    res.json({ message: 'Welcome to the dashboard' });
-});
+app.use('/', authenticateUser, cartRoutes);
 
 
 // Error handler
