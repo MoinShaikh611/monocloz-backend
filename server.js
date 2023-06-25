@@ -5,7 +5,7 @@ const connectToDatabase = require('./mongoConnection');
 // Routes
 const productsRoutes = require('./routes/products');
 const authRoutes = require('./routes/authRoutes');
-
+const orderRoutes = require("./routes/orderRoutes")
 const dotenv = require('dotenv');
 const app = express();
 
@@ -26,7 +26,7 @@ app.use(express.json());
 // Routes
 app.use('/api/products', productsRoutes);
 app.use('/auth', authRoutes);
-
+app.use('/orders', orderRoutes)
 
 // Error handler
 app.use((err, req, res, next) => {

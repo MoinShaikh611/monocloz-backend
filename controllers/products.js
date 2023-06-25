@@ -3,7 +3,7 @@ const Product = require('../models/products')
 exports.getAllProducts = async (req, res) => {
     try {
         const products = await Product.find({})
-            .select('name price');
+            .select('name price').lean();
         res.status(200).json(products);
     } catch (error) {
         console.error('Error retrieving products:', error);
@@ -15,7 +15,7 @@ exports.getAllProducts = async (req, res) => {
 exports.getProductById = async (req, res) => {
     const { id } = req.params;
     try {
-        const product = await Product.findById(id);
+        const product = await Product.findById(id).lean();
         if (!product) {
             return res.status(404).json({ message: 'Product not found.' });
         }
